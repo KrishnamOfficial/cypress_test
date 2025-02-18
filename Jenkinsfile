@@ -57,7 +57,7 @@ pipeline {
                         emailext attachmentsPattern: reportPath,
                                  subject: "Cypress Test Report - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                                  body: "The Cypress test report is attached.\n\nBuild URL: ${env.BUILD_URL}",
-                                 to: 'ayushoffice12@gmail.com.com'
+                                 to: 'ayushoffice12@gmail.com'
                     } else {
                         echo "Report not found, skipping email."
                     }
