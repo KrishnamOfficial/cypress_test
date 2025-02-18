@@ -22,10 +22,8 @@ pipeline {
         stage('Run Cypress Tests') {
             steps {
                 script {
-                    try {
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                         sh 'npx cypress run'
-                    } catch (Exception e) {
-                        echo "Cypress tests failed, but continuing..."
                     }
                 }
             }
@@ -33,17 +31,28 @@ pipeline {
         
         stage('Publish Test Results') {
             steps {
-                junit '**/results/*.xml'  // Works if Mocha JUnit Reporter is configured
+                junit '**/cypress/reports/junit/*.xml'  // Works if Mocha JUnit Reporter is configured
+            }
+        }
+
+        stage('Generate Mochawesome Report') {
+            steps {
+                script {
+                    sh 'npx mochawesome-merge cypress/reports/mocha/*.json -o cypress/reports/mochawesome.json'
+                    sh 'npx marge cypress/reports/mochawesome.json -o cypress/reports/html'
+                }
             }
         }
     }
     
     post {
         always {
-            archiveArtifacts artifacts: '**/cypress/screenshots/**, **/cypress/videos/**'
+            archiveArtifacts artifacts: '**/cypress/screenshots/**, **/cypress/videos/**, **/cypress/reports/html/**'
         }
         failure {
             echo "Build failed. Check logs for errors."
+            // Example: Send failure notification (Uncomment if needed)
+            // sh 'npx some-notification-script'
         }
     }
 }
