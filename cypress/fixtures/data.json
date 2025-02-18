@@ -1,0 +1,9 @@
+{
+    "postId": "99999",
+    "newPost": {
+        "title": "foo",
+        "body": "bar",
+        "userId": 1
+    },
+    "postIdToDelete": 1
+}
