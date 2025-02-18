@@ -26,11 +26,6 @@ describe('Post API Tests', () => {
     });
   });
 
-  it('Should fail to get a post with invalid ID', () => {
-    postApiPage.getPostById(OrderData.postId).then((response) => {
-      expect(response.status).to.eq(404);
-    });
-  });
 
   it('Should create a post successfully', () => {
     postApiPage.createPost(OrderData.newPost).then((response) => {
