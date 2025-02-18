@@ -12,12 +12,13 @@ module.exports = defineConfig({
     },
     cypressMochawesomeReporterReporterOptions: {
       charts: true,
-      reportPageTitle: 'custom-title',
+      reportPageTitle: 'Test Report',
       embeddedScreenshots: true,
       inlineAssets: true,
       saveAllAttempts: false,
       videoOnFailOnly: false,
-      json: false,  // Disable JSON report generation
+      json: true,  // ✅ Enabled JSON reports for merging
+      reportDir: 'cypress/reports/mocha'
     }
   },
   e2e: {
